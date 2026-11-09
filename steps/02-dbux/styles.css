@@ -1,0 +1,36 @@
+/*
+ * DB UX Design System – Styles
+ *
+ * Reihenfolge per Cascade Layers: Theme < Komponenten < eigene Styles.
+ * Eigene Regeln ohne @layer gewinnen immer gegen DB UX – ganz ohne !important.
+ *
+ * TODO(Theme): Für echte DB-Anwendungen das DB Theme (Inner-Source-Variante)
+ * statt des Whitelabel-Themes einbinden – nur die nächste @import-Zeile tauschen.
+ */
+@layer whitelabel-theme, db-ux;
+@import "@db-ux/core-foundations/build/styles/theme/rollup.css" layer(whitelabel-theme);
+@import "@db-ux/core-components/build/styles/bundle.css" layer(db-ux);
+
+/* Übung Block 3 · Basis: Hier liegen die Layout-Regeln zum Ausprobieren (noch auskommentiert) */
+@import "./layout.css";
+
+/*
+ * Eckige Ecken wie im DB Theme (ab Version 7): Das Whitelabel-Theme rundet leicht ab.
+ * Wir setzen nur die Radius-Tokens auf 0, "full" bleibt für Pills und Avatare.
+ * Mit dem echten DB Theme kann dieser Block entfallen.
+ */
+@layer whitelabel-theme {
+  :root {
+    --db-border-radius-3xs: 0;
+    --db-border-radius-2xs: 0;
+    --db-border-radius-xs: 0;
+    --db-border-radius-sm: 0;
+    --db-border-radius-md: 0;
+    --db-border-radius-lg: 0;
+    --db-border-radius-xl: 0;
+    --db-border-radius-2xl: 0;
+    --db-border-radius-3xl: 0;
+  }
+}
+
+/* ---- Ab hier: eure eigenen Styles (Übung Block 3 · Plus) ---- */

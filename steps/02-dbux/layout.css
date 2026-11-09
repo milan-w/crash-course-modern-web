@@ -1,0 +1,113 @@
+/*
+ * Übung Block 3 · Basis – Layout zum Ausprobieren
+ * ===============================================
+ * Alle Regeln sind schon da, aber noch auskommentiert.
+ * So geht's: Einen Abschnitt markieren, Kommentar entfernen (Strg+# bzw. Cmd+/),
+ * speichern, Ergebnis in der Vorschau anschauen. Dann die ✏️-Aufgabe ausprobieren.
+ * Die Erklärungen stehen in AUFGABE-BASIS.md.
+ */
+
+/* ---------------------------------------------------------------------------
+ * 1. Abstände mit Design-Tokens
+ * Statt fester Pixelwerte nutzen wir die Abstände des DB Design Systems.
+ * ✏️ Ändert --app-gap auf var(--db-spacing-fixed-xl). Was passiert?
+ * ------------------------------------------------------------------------ */
+
+/*
+:root {
+  --app-gap: var(--db-spacing-fixed-md);
+  --app-gap-sm: var(--db-spacing-fixed-sm);
+  --app-card-min: 18rem;
+}
+
+#search-form {
+  display: grid;
+  gap: var(--app-gap);
+  max-inline-size: 60rem;
+}
+*/
+
+/* ---------------------------------------------------------------------------
+ * 2. Grid: „Von“ | Tauschen | „Nach“ nebeneinander – aber erst ab 40rem Breite
+ * ✏️ Zieht das Vorschaufenster schmal und wieder breit. Ab wann springt das Layout um?
+ * ------------------------------------------------------------------------ */
+
+/*
+.stations {
+  display: grid;
+  gap: var(--app-gap-sm);
+  align-items: start;
+  grid-template-columns: 1fr;
+
+  @media (width >= 40rem) {
+    grid-template-columns: 1fr auto 1fr;
+
+    .db-button {
+      margin-block-start: 1.5rem;
+    }
+  }
+
+  .db-button {
+    justify-self: center;
+  }
+}
+*/
+
+/* ---------------------------------------------------------------------------
+ * 3. Ergebnisliste: so viele Spalten, wie nebeneinander passen
+ * ✏️ Ändert --app-card-min (oben in Abschnitt 1) auf 30rem. Wie viele Spalten bleiben?
+ * ------------------------------------------------------------------------ */
+
+/*
+.trip-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--app-gap);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--app-card-min)), 1fr));
+}
+*/
+
+/* ---------------------------------------------------------------------------
+ * 4. :has() – ein Element reagiert auf seinen Inhalt
+ * Ein Feld bekommt einen roten Rahmen, sobald die Eingabe ungültig ist.
+ * ✏️ Schickt das leere Formular ab. Welche Felder werden markiert?
+ * ------------------------------------------------------------------------ */
+
+/*
+db-input:has(input:user-invalid) {
+  outline: var(--db-border-width-xs) solid var(--db-critical-on-bg-basic-emphasis-80-default);
+  outline-offset: var(--db-spacing-fixed-3xs);
+  border-radius: var(--db-border-radius-xs);
+}
+*/
+
+/* ---------------------------------------------------------------------------
+ * 5. Ergebnis-Cards aufräumen
+ * Hinweis: DB UX setzt class="trip" auf das innere Element der Card – daher .db-card.trip.
+ * ✏️ Ändert font: var(--db-type-headline-sm) auf var(--db-type-headline-lg).
+ * ------------------------------------------------------------------------ */
+
+/*
+.db-card.trip {
+  display: grid;
+  gap: var(--app-gap-sm);
+
+  :is(h3, p, ul) {
+    margin: 0;
+  }
+
+  .trip-times {
+    font: var(--db-type-headline-sm);
+  }
+
+  .trip-legs {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--db-spacing-fixed-xs);
+  }
+}
+*/

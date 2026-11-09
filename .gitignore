@@ -1,0 +1,16 @@
+node_modules
+dist
+.DS_Store
+
+# Eure Arbeitskopie und Sicherungen
+app
+.backup
+
+# Testergebnisse
+test-results
+playwright-report
+
+# Geheimnisse – niemals einchecken!
+.env
+.env.*
+!.env.example

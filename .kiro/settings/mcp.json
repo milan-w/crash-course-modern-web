@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "db-ux": {
+      "command": "pnpm",
+      "args": ["--silent", "dlx", "@db-ux/mcp-server@6.2.1"]
+    }
+  }
+}

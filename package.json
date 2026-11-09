@@ -1,0 +1,42 @@
+{
+  "name": "@crash-course/exercises",
+  "private": true,
+  "type": "module",
+  "description": "Übungsprojekt „Verbindungssuche“ für den Crash Course Modern (DB) Web",
+  "packageManager": "pnpm@12.3.4",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "node scripts/step.js dev",
+    "build": "node scripts/step.js build",
+    "preview": "node scripts/step.js preview",
+    "step": "node scripts/step.js checkout",
+    "build:all": "node scripts/step.js build-all",
+    "smoke": "node scripts/smoke.js",
+    "lint": "eslint",
+    "test:a11y": "playwright test",
+    "test:install": "playwright install chromium",
+    "ai-context": "db-ux-agent-cli",
+    "sync": "node scripts/sync-steps.js",
+    "sync:check": "node scripts/sync-steps.js --check"
+  },
+  "dependencies": {
+    "@db-ux/core-components": "6.2.1",
+    "@db-ux/core-foundations": "6.2.1",
+    "@db-ux/wc-core-components": "6.2.1"
+  },
+  "devDependencies": {
+    "@angular-eslint/template-parser": "22.6.0",
+    "@axe-core/playwright": "4.14.0",
+    "@db-ux/agent-cli": "6.2.1",
+    "@db-ux/core-eslint-plugin": "6.2.1",
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.64.1",
+    "esbuild": "0.28.2",
+    "eslint": "10.12.0",
+    "globals": "17.13.0",
+    "typescript": "6.0.3",
+    "vite": "8.3.4"
+  }
+}

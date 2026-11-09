@@ -1,0 +1,21 @@
+# Eigenständiges Übungsprojekt – unabhängig von den Folien im übergeordneten Ordner.
+# Die Datei enthält vor allem pnpm-Einstellungen für die Supply-Chain-Sicherheit.
+packages:
+  - "."
+
+# Build-Skripte (postinstall) laufen nur für ausdrücklich freigegebene Pakete
+allowBuilds:
+  esbuild: true
+
+# pnpm installiert standardmäßig nur Versionen, die schon eine Weile veröffentlicht sind
+# (Schutz vor frisch kompromittierten Paketen). Ausnahmen müssen hier explizit stehen.
+minimumReleaseAgeExclude:
+  - "@axe-core/playwright@4.14.0"
+  - "@db-ux/core-components@6.2.1"
+  - "@db-ux/core-eslint-plugin@6.2.1"
+  - "@db-ux/core-foundations@6.2.1"
+  - "@db-ux/wc-core-components@6.2.1"
+  - "@db-ux/agent-cli@6.2.1"
+
+# Neue Abhängigkeiten immer mit exakter Version eintragen (kein ^ oder ~)
+saveExact: true

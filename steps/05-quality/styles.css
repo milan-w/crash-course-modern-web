@@ -1,0 +1,182 @@
+/*
+ * DB UX Design System – Styles
+ *
+ * Reihenfolge per Cascade Layers: Theme < Komponenten < eigene Styles.
+ * Eigene Regeln ohne @layer gewinnen immer gegen DB UX – ganz ohne !important.
+ *
+ * TODO(Theme): Für echte DB-Anwendungen das DB Theme (Inner-Source-Variante)
+ * statt des Whitelabel-Themes einbinden – nur die nächste @import-Zeile tauschen.
+ */
+@layer whitelabel-theme, db-ux;
+@import "@db-ux/core-foundations/build/styles/theme/rollup.css" layer(whitelabel-theme);
+@import "@db-ux/core-components/build/styles/bundle.css" layer(db-ux);
+
+/*
+ * Eckige Ecken wie im DB Theme (ab Version 7): Das Whitelabel-Theme rundet leicht ab.
+ * Wir setzen nur die Radius-Tokens auf 0, "full" bleibt für Pills und Avatare.
+ * Mit dem echten DB Theme kann dieser Block entfallen.
+ */
+@layer whitelabel-theme {
+  :root {
+    --db-border-radius-3xs: 0;
+    --db-border-radius-2xs: 0;
+    --db-border-radius-xs: 0;
+    --db-border-radius-sm: 0;
+    --db-border-radius-md: 0;
+    --db-border-radius-lg: 0;
+    --db-border-radius-xl: 0;
+    --db-border-radius-2xl: 0;
+    --db-border-radius-3xl: 0;
+  }
+}
+
+/* ---- Ab hier: eure eigenen Styles ---- */
+
+/* Eigene Custom Properties – abgeleitet aus DB-Tokens, keine magischen Zahlen */
+:root {
+  --app-gap: var(--db-spacing-fixed-md);
+  --app-gap-sm: var(--db-spacing-fixed-sm);
+  --app-card-min: 18rem;
+}
+
+/* ---------------------------------------------------------------------------
+ * Suchformular – Grid statt Float/Flex-Hacks
+ * ------------------------------------------------------------------------ */
+#search-form {
+  display: grid;
+  gap: var(--app-gap);
+  /* Begrenzte Breite: bleibt auch bei 200 % Zoom gut lesbar */
+  max-inline-size: 60rem;
+}
+
+.stations {
+  display: grid;
+  gap: var(--app-gap-sm);
+  align-items: start;
+  /* Mobil: untereinander, Tauschen-Button zwischen den Feldern */
+  grid-template-columns: 1fr;
+
+  /* Ab 40rem: Von | ⇄ | Nach nebeneinander */
+  @media (width >= 40rem) {
+    grid-template-columns: 1fr auto 1fr;
+
+    /* Button auf Höhe der Eingabefelder, also unter den Labels */
+    .db-button {
+      margin-block-start: 1.5rem;
+    }
+  }
+
+  /* DB-Komponenten-Hosts sind display: contents – das Grid-Item ist das innere <button class="db-button"> */
+  .db-button {
+    justify-self: center;
+  }
+}
+
+/* fieldset ohne Browser-Rahmen, Radios nebeneinander */
+.moment {
+  display: grid;
+  gap: var(--app-gap-sm);
+  border: 0;
+  padding: 0;
+  margin: 0;
+
+  legend {
+    font-weight: 700;
+    padding: 0;
+  }
+}
+
+.anchor {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--app-gap);
+}
+
+/* Datum/Uhrzeit + „Jetzt“-Button nebeneinander */
+.datetime {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: var(--app-gap-sm);
+
+  .db-button {
+    margin-block-start: 1.5rem;
+  }
+}
+
+.options summary {
+  cursor: pointer;
+  font-weight: 700;
+  /* Ausreichend großes Klickziel (WCAG 2.5.8) */
+  min-block-size: 2.75rem;
+  align-content: center;
+}
+
+/* ---------------------------------------------------------------------------
+ * :has() – Eltern reagieren auf Kinder
+ * Feld mit ungültiger Eingabe markieren – :user-invalid greift erst NACH der Interaktion.
+ * Zusätzlich zur Farbe zeigt DB UX Text (invalid-message) – nie nur Farbe (WCAG 1.4.1)!
+ * ------------------------------------------------------------------------ */
+db-input:has(input:user-invalid) {
+  outline: var(--db-border-width-xs) solid var(--db-critical-on-bg-basic-emphasis-80-default);
+  outline-offset: var(--db-spacing-fixed-3xs);
+  border-radius: var(--db-border-radius-xs);
+}
+
+/* ---------------------------------------------------------------------------
+ * Ergebnisliste – so viele Spalten wie passen, ganz ohne Media Query
+ * ------------------------------------------------------------------------ */
+.results {
+  margin-block-start: var(--app-gap);
+}
+
+.trip-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--app-gap);
+  /* min(100%, …): verhindert horizontales Scrollen auf sehr schmalen Displays */
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--app-card-min)), 1fr));
+}
+
+/* Achtung: DB UX verschiebt class="trip" vom <db-card>-Host auf das innere
+ * <div class="db-card trip">. Daher hier .db-card.trip statt .trip .db-card. */
+.db-card.trip {
+  display: grid;
+  gap: var(--app-gap-sm);
+
+  :is(h3, p, ul) {
+    margin: 0;
+  }
+
+  .trip-times {
+    font: var(--db-type-headline-sm);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .trip-meta {
+    color: var(--db-adaptive-on-bg-basic-emphasis-80-default);
+  }
+
+  .trip-legs {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--db-spacing-fixed-xs);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Bewegung reduzieren – wer das im System einstellt, bekommt keine Animationen
+ * ------------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

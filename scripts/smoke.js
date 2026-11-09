@@ -18,7 +18,7 @@ const fail = (msg) => {
 
 const server = await createServer({
   configFile: `${exercisesDir}/vite.config.js`,
-  root: `${exercisesDir}/steps/00-start`,
+  root: `${exercisesDir}/steps/uebung-1`,
   server: { port: 0 },
   logLevel: "silent",
 });

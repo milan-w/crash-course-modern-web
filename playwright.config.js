@@ -2,13 +2,15 @@
 //
 //   pnpm test:a11y                        → alle Schritte + app/
 //   pnpm test:a11y --project=app          → nur eure Arbeitskopie
-//   pnpm test:a11y --project=04-js        → nur Schritt 04 (hat absichtlich Fehler!)
+//   pnpm test:a11y --project=demo-fehler  → nur der Stand mit absichtlichen Fehlern
 //
 // Browser einmalig installieren: pnpm test:install
 import { defineConfig, devices } from "@playwright/test";
 import { existsSync, readdirSync } from "node:fs";
 
-const steps = readdirSync(new URL("./steps", import.meta.url)).filter((name) => /^\d\d-/.test(name));
+const steps = readdirSync(new URL("./steps", import.meta.url), { withFileTypes: true })
+  .filter((e) => e.isDirectory())
+  .map((e) => e.name);
 const roots = existsSync(new URL("./app", import.meta.url)) ? [...steps, "app"] : steps;
 
 export default defineConfig({

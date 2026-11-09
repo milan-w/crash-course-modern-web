@@ -1,6 +1,6 @@
 // Vite-Konfiguration für die Übungen – mit eingebauter Beispiel-API.
 //
-// Diese Datei ist die Vorlage. `pnpm sync` kopiert sie in die Schritte ab 03,
+// Diese Datei ist die Vorlage. `pnpm sync` kopiert sie in die Stände ab Übung 4,
 // damit jeder Schritt auch allein (z. B. in StackBlitz) läuft.
 //
 // Der Dev-Server beantwortet /api/v1/… selbst mit Beispieldaten aus demo-api.js. Für die App sieht das aus wie

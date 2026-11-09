@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--
+      Content-Security-Policy: Der Browser führt nur Skripte von der eigenen Origin aus –
+      Inline-Handler wie onerror="…" werden blockiert, selbst wenn doch einmal HTML eingeschleust wird.
+      In Produktion besser als HTTP-Header (dann auch frame-ancestors möglich).
+      style-src 'unsafe-inline' braucht DB UX (Tooltip-Positionierung, Stencil-Hydration).
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"
+    />
+    <title>Verbindungssuche – Crash Course Modern (DB) Web</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./main.js"></script>
+  </head>
+  <body>
+    <!--
+      Lösung Block 4 – behobene Fehler gegenüber demo-fehler (Aufgaben für Block 5: AUFGABE-MIT-AI.md / AUFGABE-OHNE-AI.md):
+      1. „Jetzt“-Button: type="button" (sonst schickt er das Formular ab) + Text + Tooltip (index.html)
+      2. XSS: Ergebnis-Überschrift per DOM-APIs/textContent statt innerHTML (suche.js)
+      Zusätzlich (Zusatzherausforderung 4.7): Content-Security-Policy als zweite Verteidigungslinie (meta-Tag oben)
+
+      Weitermachen? → Zusatzherausforderungen in challenges.md im Übungs-Repo
+    -->
+
+    <!-- DB Shell: Standard-Rahmen für DB-Anwendungen (Header, Navigation, <main>) -->
+    <db-shell>
+      <db-control-panel-desktop>
+        <db-control-panel-skip-navigation
+          slot="skipNavigation"
+          text="Zum Inhalt springen"
+        ></db-control-panel-skip-navigation>
+        <db-control-panel-brand slot="brand">Verbindungssuche</db-control-panel-brand>
+      </db-control-panel-desktop>
+
+      <db-control-panel-mobile drawer-header-text="Verbindungssuche" burger-menu-label="Menü öffnen">
+        <db-control-panel-skip-navigation
+          slot="skipNavigation"
+          text="Zum Inhalt springen"
+        ></db-control-panel-skip-navigation>
+        <db-control-panel-brand slot="brand">Verbindungssuche</db-control-panel-brand>
+      </db-control-panel-mobile>
+
+      <db-shell-content>
+        <db-section width="large">
+          <h1>Verbindungssuche</h1>
+
+          <form id="search-form" method="get" aria-labelledby="search-heading">
+            <h2 id="search-heading">Wohin möchtest du reisen?</h2>
+
+            <div class="stations">
+              <db-input
+                name="from"
+                type="text"
+                label="Von"
+                message="Bahnhof oder Haltestelle, z. B. Frankfurt(Main)Hbf"
+                invalid-message="Bitte gib einen Startbahnhof ein."
+                autocomplete="off"
+                required
+              ></db-input>
+
+              <db-button name="swap" type="button" icon="arrows_vertical" variant="ghost" no-text>
+                Start und Ziel tauschen
+                <db-tooltip>Start und Ziel tauschen</db-tooltip>
+              </db-button>
+
+              <db-input
+                name="to"
+                type="text"
+                label="Nach"
+                invalid-message="Bitte gib einen Zielbahnhof ein."
+                autocomplete="off"
+                required
+              ></db-input>
+            </div>
+
+            <fieldset class="moment">
+              <legend>Zeitpunkt</legend>
+              <div class="anchor">
+                <db-radio name="anchor" value="departure" label="Abfahrt" checked></db-radio>
+                <db-radio name="anchor" value="arrival" label="Ankunft"></db-radio>
+              </div>
+              <div class="datetime">
+                <db-input
+                  name="datetime"
+                  type="datetime-local"
+                  label="Datum und Uhrzeit"
+                  invalid-message="Bitte wähle Datum und Uhrzeit."
+                  required
+                ></db-input>
+                <!-- ✅ Fix (Block 4): type="button" (sonst Submit!) + zugänglicher Name + Tooltip -->
+                <db-button name="now" type="button" icon="clock" variant="ghost" no-text>
+                  Jetzt
+                  <db-tooltip>Aktuelle Uhrzeit einsetzen</db-tooltip>
+                </db-button>
+              </div>
+            </fieldset>
+
+            <details class="options">
+              <summary>Weitere Optionen</summary>
+              <db-checkbox name="direct" label="Nur Direktverbindungen"></db-checkbox>
+            </details>
+
+            <db-button type="submit" variant="brand" icon="magnifying_glass">Verbindungen suchen</db-button>
+          </form>
+
+          <db-notification semantic="informational" headline="Hinweis">
+            Die Verbindungen sind Beispieldaten. Fahrplan und Zugnummern sind ausgedacht.
+          </db-notification>
+
+          <section class="results" aria-labelledby="results-heading">
+            <!-- tabindex="-1": per JS fokussierbar, aber nicht in der Tab-Reihenfolge -->
+            <h2 id="results-heading" tabindex="-1">Verbindungen</h2>
+
+            <!-- Live-Region: muss schon beim Laden im DOM sein, dann wird jede Textänderung vorgelesen -->
+            <p id="status" role="status">Noch keine Suche gestartet.</p>
+
+            <ol class="trip-list" aria-labelledby="results-heading"></ol>
+          </section>
+        </db-section>
+      </db-shell-content>
+    </db-shell>
+
+    <!-- Vorlage für eine Ergebnis-Card: wird per JS geklont und mit textContent befüllt -->
+    <template id="trip-template">
+      <li>
+        <db-card class="trip">
+          <h3 class="trip-times"><time data-field="departure"></time> – <time data-field="arrival"></time></h3>
+          <p class="trip-meta">Dauer <span data-field="duration"></span> · <span data-field="changes"></span></p>
+          <ul class="trip-legs" aria-label="Verkehrsmittel" data-field="transports"></ul>
+          <p class="trip-route" data-field="route"></p>
+        </db-card>
+      </li>
+    </template>
+  </body>
+</html>

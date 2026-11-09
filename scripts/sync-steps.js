@@ -21,10 +21,10 @@ const pick = (deps, names) => Object.fromEntries(names.map((name) => [name, deps
 
 const ESLINT_DEPS = ["@angular-eslint/template-parser", "@db-ux/core-eslint-plugin", "@eslint/js", "eslint", "globals"];
 
-/** Was braucht ein Schritt? Ab 03 die Beispiel-API und den Linter (XSS-Teil von Block 4). */
+/** Was braucht ein Stand? Ab Übung 4 die Beispiel-API und den Linter (XSS-Teil von Block 4), ebenso demo-fehler. */
 const needs = (step) => {
-  const number = Number(step.slice(0, 2));
-  return { api: number >= 3, lint: number >= 3 };
+  const number = step === "demo-fehler" ? 4 : Number(step.replace("uebung-", ""));
+  return { api: number >= 4, lint: number >= 4 };
 };
 
 function packageJson(step) {
@@ -59,7 +59,9 @@ const copies = (step) => {
   ];
 };
 
-const steps = readdirSync(stepsDir).filter((name) => /^\d\d-/.test(name));
+const steps = readdirSync(stepsDir, { withFileTypes: true })
+  .filter((e) => e.isDirectory())
+  .map((e) => e.name);
 const outdated = [];
 
 for (const step of steps) {

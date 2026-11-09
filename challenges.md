@@ -2,7 +2,7 @@
 
 Für alle, die in einer Übung schneller fertig sind – oder den Workshop später in Ruhe allein noch einmal durchgehen.
 Jede Herausforderung baut auf eurem Stand auf (lokal in `app/`, sonst in eurem StackBlitz) und ist **unabhängig**
-von den anderen. Der nächste Block startet immer mit dem fertigen Stand (`pnpm step NN` bzw. dem StackBlitz-Link des
+von den anderen. Der nächste Block startet immer mit dem fertigen Stand (`pnpm step N` bzw. dem StackBlitz-Link des
 nächsten Blocks), ihr verpasst also nichts, wenn ihr etwas nicht fertig bekommt.
 
 Die JavaScript-Herausforderungen beziehen sich auf `suche.js` aus Block 4.
@@ -74,10 +74,9 @@ Browser, z. B. zu Buttons und Links, Überschriften, Labels, Fehlermeldungen, Li
 
 ## Block 2 – DB UX
 
-### 2.1 Dunkelmodus per Schalter
+### 2.1 Dark Mode per Schalter
 
-**Ziel:** Ein `<db-switch>` „Dunkelmodus“ in der Shell schaltet zwischen hell und dunkel. Die Wahl bleibt nach einem
-Reload erhalten.
+**Ziel:** Ein `<db-switch>` „Dark Mode“ in der Shell schaltet zwischen hell und dunkel. Die Wahl bleibt nach einem Reload erhalten.
 
 - DB UX steuert den Modus über `data-mode="light|dark"` am `<html>`. Ohne `data-mode` folgt die Seite der
   Systemeinstellung.
@@ -89,7 +88,7 @@ Reload erhalten.
 
 ```html
 <db-control-panel-actions-2 slot="actions2">
-  <db-switch name="dark-mode" label="Dunkelmodus"></db-switch>
+  <db-switch name="dark-mode" label="Dark Mode"></db-switch>
 </db-control-panel-actions-2>
 ```
 
@@ -472,14 +471,14 @@ und umgekehrt?
 
 ### 4.11 Qualitäts-Detektiv
 
-**Ziel:** Im Stand `04-js` stecken neben der XSS-Lücke noch weitere Fehler. Findet sie mit Werkzeugen, erst dann in
-die Lösung `05-quality` schauen.
+**Ziel:** Im Stand `demo-fehler` stecken neben der XSS-Lücke noch weitere Fehler. Findet sie mit Werkzeugen, erst dann in
+die Lösung `uebung-5` schauen.
 
-1. **Linter:** `pnpm lint steps/04-js` (lokal) bzw. `npm run lint` (StackBlitz `04-js`). Was meldet ESLint mit den
+1. **Linter:** `pnpm lint steps/demo-fehler` (lokal) bzw. `npm run lint` (StackBlitz `demo-fehler`). Was meldet ESLint mit den
    DB-UX-Regeln, und warum ist das ein Problem?
 2. **Accessibility-Baum:** DevTools → Elements → im Untermenü neben _Styles_ den Bereich _Accessibility_ öffnen. Gibt es einen Button, den ein Screenreader nur
    als „Schalter“ vorliest? Was passiert außerdem, wenn ihr ihn anklickt? (Achtet auf die Adresszeile.)
-3. **Tests:** `pnpm test:a11y --project=04-js` vs. `--project=05-quality`. Welche Tests schlagen fehl?
+3. **Tests:** `pnpm test:a11y --project=demo-fehler` vs. `--project=uebung-5`. Welche Tests schlagen fehl?
 4. Fixen, bis Linter und Tests grün sind.
 
 <details>
@@ -512,7 +511,7 @@ Die Links zu API Portal, Referenzimplementierungen und MCP-Verzeichnissen stehen
 - Vergleicht die Antwort der echten API mit unserer `demo-api.js`: Welche Felder braucht die Oberfläche wirklich?
   Genau das macht `toTrip()` in `api.js`.
 
-### 5.2 Mit einer Referenzimplementierung starten
+### 5.2 Mit einer Referenzimplementierung starten (benötigt Gitlab-Zugang)
 
 **Ziel:** Die Verbindungssuche in Angular, React, Vue oder Next.js nachbauen, auf Basis der passenden
 **Referenzimplementierung** (über das Template im Developer Portal anlegen, nicht forken).
@@ -528,7 +527,6 @@ Die Links zu API Portal, Referenzimplementierungen und MCP-Verzeichnissen stehen
 **Ziel:** Einen weiteren MCP-Server aus dem Verzeichnis bewusst auswählen, nicht blind installieren.
 
 - Was tut der Server? Liest er nur oder kann er auch schreiben?
-- Wohin schickt er Daten? Braucht er Zugangsdaten, und wo liegen die?
 - Wer pflegt ihn, wie aktiv ist das Repo, ist die Version gepinnt?
 - Erst danach in `.vscode/mcp.json` bzw. `.kiro/settings/mcp.json` eintragen
 
@@ -536,6 +534,6 @@ Die Links zu API Portal, Referenzimplementierungen und MCP-Verzeichnissen stehen
 
 **Ziel:** Prüfen, wie gut ein AI-Review wirklich ist.
 
-- Nehmt den Stand `04-js` und ein Prompt-Muster aus `cheatsheets/prompts.md` (Barrierefreiheit oder Security)
+- Nehmt den Stand `demo-fehler` und ein Prompt-Muster aus `cheatsheets/prompts.md` (Barrierefreiheit oder Security)
 - Vergleicht mit 4.11: Findet die AI dieselben Fehler? Mehr? Falsches?
 - Nur mit freigegebenen Tools, die für Code zugelassen sind. Keine Secrets in Prompts!

@@ -1,12 +1,16 @@
 #!/usr/bin/env node
 // Kleines CLI rund um die Übungsschritte.
 //
-//   pnpm dev            → startet eure Arbeitskopie (app/)
-//   pnpm dev 03         → startet die Lösung von Schritt 03 (zum Vergleichen)
-//   pnpm step 02        → kopiert Schritt 02 nach app/ (Aufholen, wenn man hängt)
-//   pnpm build [NN]     → baut app/ bzw. Schritt NN nach dist/
-//   pnpm preview [NN]   → baut und startet den Produktions-Build
-//   pnpm build:all      → baut alle Schritte (Kontrolle für Moderator:innen)
+// Jeder Ordner in steps/ ist der Startstand einer Übung (uebung-1 … uebung-5). Die Lösung von Übung N ist
+// der Start von Übung N+1. demo-fehler ist kein Übungsstart, sondern der Stand mit absichtlichen Fehlern.
+//
+//   pnpm dev              → startet eure Arbeitskopie (app/)
+//   pnpm dev 4            → startet steps/uebung-4 (z. B. um die Lösung von Übung 3 anzusehen)
+//   pnpm dev demo-fehler  → startet den Stand mit absichtlichen Fehlern
+//   pnpm step 3           → kopiert steps/uebung-3 nach app/ (Aufholen, wenn man hängt)
+//   pnpm build [N]        → baut app/ bzw. den Stand nach dist/
+//   pnpm preview [N]      → baut und startet den Produktions-Build
+//   pnpm build:all        → baut alle Stände (Kontrolle für Moderator:innen)
 import { cp, mkdir, readdir, rename, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -26,28 +30,28 @@ const exists = (p) =>
 async function listSteps() {
   const entries = await readdir(stepsDir, { withFileTypes: true });
   return entries
-    .filter((e) => e.isDirectory() && /^\d\d-/.test(e.name))
+    .filter((e) => e.isDirectory())
     .map((e) => e.name)
     .sort();
 }
 
-/** "3", "03" oder "03-css" → absoluter Pfad des Schritts */
+/** "3", "uebung-3" oder "demo-fehler" → absoluter Pfad des Stands */
 async function resolveStep(arg) {
   const steps = await listSteps();
-  const wanted = String(arg).padStart(2, "0");
-  const match = steps.find((s) => s === arg || s.startsWith(`${wanted}-`));
+  const name = /^\d+$/.test(String(arg)) ? `uebung-${Number(arg)}` : String(arg);
+  const match = steps.find((s) => s === name);
   if (!match) {
-    console.error(`❌ Schritt „${arg}“ gibt es nicht. Verfügbar: ${steps.join(", ")}`);
+    console.error(`❌ Stand „${arg}“ gibt es nicht. Verfügbar: ${steps.join(", ")}`);
     process.exit(1);
   }
   return path.join(stepsDir, match);
 }
 
-/** Legt app/ beim ersten Start aus 00-start an. */
+/** Legt app/ beim ersten Start aus uebung-1 an. */
 async function ensureApp() {
   if (await exists(appDir)) return;
-  await cp(await resolveStep("00"), appDir, { recursive: true });
-  console.log("📁 app/ wurde aus steps/00-start angelegt – hier arbeitet ihr.");
+  await cp(await resolveStep("1"), appDir, { recursive: true });
+  console.log("📁 app/ wurde aus steps/uebung-1 angelegt – hier arbeitet ihr.");
 }
 
 async function rootFor(arg) {
@@ -60,7 +64,7 @@ async function rootFor(arg) {
 
 async function checkout(arg) {
   if (arg === undefined) {
-    console.error("Bitte Schritt angeben, z. B.: pnpm step 02");
+    console.error("Bitte Schritt angeben, z. B.: pnpm step 3");
     process.exit(1);
   }
   const source = await resolveStep(arg);

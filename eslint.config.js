@@ -1,6 +1,6 @@
 // ESLint (Flat Config)
 //   pnpm lint app               → eure Arbeitskopie prüfen
-//   pnpm lint steps/04-js       → findet die eingebauten Fehler
+//   pnpm lint steps/demo-fehler → findet die eingebauten Fehler
 import js from "@eslint/js";
 import angularTemplateParser from "@angular-eslint/template-parser";
 import dbUx from "@db-ux/core-eslint-plugin";

@@ -1,7 +1,9 @@
 # Spickzettel: Web Components ↔ React ↔ Angular
 
 Alle Beispiele im Workshop nutzen `@db-ux/wc-core-components`. Wer lieber in React oder Angular arbeitet, nimmt die
-passenden Wrapper – **Props, Varianten und Styles sind identisch**, nur die Schreibweise unterscheidet sich.
+passenden Pakete. Das sind keine Wrapper um die Web Components, sondern native React- bzw. Angular-Komponenten, die
+DB UX aus derselben Quelle erzeugt (mit [Mitosis](https://github.com/BuilderIO/mitosis)). **Props, Varianten und
+Styles sind identisch**, nur die Schreibweise unterscheidet sich.
 
 ## Installation
 

@@ -474,7 +474,7 @@ und umgekehrt?
 **Ziel:** Im Stand `demo-fehler` stecken neben der XSS-Lücke noch weitere Fehler. Findet sie mit Werkzeugen, erst dann in
 die Lösung `uebung-5` schauen.
 
-1. **Linter:** `pnpm lint steps/demo-fehler` (lokal) bzw. `npm run lint` (StackBlitz `demo-fehler`). Was meldet ESLint mit den
+1. **Linter (nur lokal):** `pnpm lint steps/demo-fehler`. Was meldet ESLint mit den
    DB-UX-Regeln, und warum ist das ein Problem?
 2. **Accessibility-Baum:** DevTools → Elements → im Untermenü neben _Styles_ den Bereich _Accessibility_ öffnen. Gibt es einen Button, den ein Screenreader nur
    als „Schalter“ vorliest? Was passiert außerdem, wenn ihr ihn anklickt? (Achtet auf die Adresszeile.)

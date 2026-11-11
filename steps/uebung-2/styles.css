@@ -35,9 +35,9 @@ body {
   padding: var(--db-spacing-fixed-md);
 }
 
-/* WCAG 2.2 (2.5.8): Klickziele mindestens 24 × 24 px */
+/* WCAG 2.2 (2.5.8) verlangt mindestens 24 × 24 px. Wir nehmen die Höhe der DB-Buttons (Größe md). */
 button {
-  min-block-size: 2.75rem;
+  min-block-size: var(--db-sizing-md);
   padding-inline: var(--db-spacing-fixed-sm);
 }
 

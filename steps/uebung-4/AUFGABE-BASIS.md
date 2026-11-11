@@ -7,11 +7,11 @@ Der meiste Code ist fertig. Ihr ergänzt die Stellen, die mit ✏️ markiert si
 
 ## Teil 1 · Daten anzeigen
 
-### 1. Erst schauen: Woher kommen die Daten?
+### 1. Erst lesen: Woher kommen die Daten?
 
-1. Öffnet die DevTools (<kbd>F12</kbd>) → Tab **Network**.
-2. Öffnet die Datei `api.js` und überfliegt sie: `findStation(name)` sucht einen Bahnhof, `searchTrips(…)` sucht
-   Verbindungen. Beides holt **JSON-Daten** per `fetch` von `/api/v1/…`.
+Öffnet die Datei `api.js` und überfliegt sie: `findStation(name)` sucht einen Bahnhof, `searchTrips(…)` sucht
+Verbindungen. Beides holt **JSON-Daten** per `fetch` von `/api/v1/…`. Diese Anfragen schaut ihr euch in Schritt 3 im
+Network-Tab an, sobald die Suche läuft.
 
 ### 2. Suche einschalten
 
@@ -38,8 +38,15 @@ Beispiel-Cards) durch:
 </section>
 ```
 
+Jetzt die Anfragen sichtbar machen:
+
+1. In StackBlitz die Vorschau über das Symbol „In neuem Tab öffnen“ (oben rechts in der Vorschau) in einem eigenen
+   Tab öffnen. Dort zeigen die DevTools nur eure Seite, nicht den Editor.
+2. In diesem Tab die DevTools öffnen (<kbd>F12</kbd>) → Tab **Network** → Filter **Fetch/XHR**, ins Filterfeld
+   `api/v1` eintippen. Der Network-Tab zeichnet nur auf, solange die DevTools offen sind.
+
 Sucht jetzt nach **Frankfurt(Main)Hbf → Köln Hbf**. Es erscheinen Cards, aber mit „???“. Im Network-Tab seht ihr
-die Anfragen. Klickt auf `trips` → **Response**: Das sind die Rohdaten.
+die Anfragen an `stop-places` und `trips`. Klickt auf `trips` → **Response**: Das sind die Rohdaten.
 
 ### 4. Die Cards befüllen (`suche.js`, ✏️ 1a–1c)
 
@@ -60,11 +67,11 @@ erledigt `runSearch` schon für euch, genauso wie die Ansagen „wird gesucht“
 Hängt an die Adresse eurer Vorschau Folgendes an und ladet die Seite neu:
 
 ```text
-?from=<img src=x onerror=alert(document.domain)>&to=Köln Hbf
+?from=<img src=x onerror=alert("Schadcode")>&to=Köln Hbf
 ```
 
-(In StackBlitz zuerst die Vorschau über das Symbol „In neuem Tab öffnen“ öffnen, im eingebetteten Fenster
-unterdrückt der Browser Hinweisfenster.) Es erscheint ein Hinweisfenster. Das heißt: **Fremder Code läuft in eurer
+(In StackBlitz im eigenen Vorschau-Tab aus Schritt 3, im eingebetteten Fenster unterdrückt der Browser
+Hinweisfenster.) Es erscheint ein Hinweisfenster. Das heißt: **Fremder Code läuft in eurer
 Seite.** Ein Angreifer könnte so einen Link verschicken und z. B. im Namen des Opfers handeln. Das nennt man **XSS**
 (Cross-Site Scripting).
 

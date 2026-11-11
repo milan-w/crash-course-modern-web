@@ -26,7 +26,7 @@ Ihr arbeitet in **`layout.css`**. Dort stehen alle Regeln schon, nur auskommenti
 
 ## 4. Fehler sichtbar machen mit `:has()`
 
-`db-input:has(input:user-invalid)` bedeutet: „das `db-input`, das ein ungültiges Feld enthält“. Eltern-Elemente können so auf ihren Inhalt reagieren. `:user-invalid` greift erst, nachdem jemand das Feld benutzt oder das Formular abgeschickt hat.
+`.db-input:has(input:user-invalid)` bedeutet: „das `.db-input`, das ein ungültiges Feld enthält“. Eltern-Elemente können so auf ihren Inhalt reagieren. `:user-invalid` greift erst, nachdem jemand das Feld benutzt oder das Formular abgeschickt hat.
 
 ✏️ Leeres Formular abschicken.
 

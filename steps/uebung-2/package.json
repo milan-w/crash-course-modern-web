@@ -8,11 +8,11 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@db-ux/core-components": "6.2.1",
-    "@db-ux/core-foundations": "6.2.1",
-    "@db-ux/wc-core-components": "6.2.1"
+    "@db-ux/core-components": "6.3.0",
+    "@db-ux/core-foundations": "6.3.0",
+    "@db-ux/wc-core-components": "6.3.0"
   },
   "devDependencies": {
-    "vite": "8.3.4"
+    "vite": "8.3.6"
   }
 }

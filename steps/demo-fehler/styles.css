@@ -107,8 +107,8 @@
 .options summary {
   cursor: pointer;
   font-weight: 700;
-  /* Ausreichend großes Klickziel (WCAG 2.5.8) */
-  min-block-size: 2.75rem;
+  /* WCAG 2.5.8 verlangt mindestens 24 px. Wir nehmen die Höhe der DB-Buttons (Größe md). */
+  min-block-size: var(--db-sizing-md);
   align-content: center;
 }
 

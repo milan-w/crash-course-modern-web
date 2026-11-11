@@ -76,7 +76,7 @@
  * ------------------------------------------------------------------------ */
 
 /*
-db-input:has(input:user-invalid) {
+.db-input:has(input:user-invalid) {
   outline: var(--db-border-width-xs) solid var(--db-critical-on-bg-basic-emphasis-80-default);
   outline-offset: var(--db-spacing-fixed-3xs);
   border-radius: var(--db-border-radius-xs);

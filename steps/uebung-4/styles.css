@@ -60,25 +60,17 @@
   @media (width >= 40rem) {
     grid-template-columns: 1fr auto 1fr;
 
-    /* Button auf Höhe der Eingabefelder, also unter den Labels */
+    /* Tauschen-Button auf Höhe der Eingabefelder, also unter den Labels */
     .db-button {
       margin-block-start: 1.5rem;
     }
   }
-
-  /* DB-Komponenten-Hosts sind display: contents – das Grid-Item ist das innere <button class="db-button"> */
-  .db-button {
-    justify-self: center;
-  }
 }
 
-/* fieldset ohne Browser-Rahmen, Radios nebeneinander */
+/* Radios nebeneinander */
 .moment {
   display: grid;
   gap: var(--app-gap-sm);
-  border: 0;
-  padding: 0;
-  margin: 0;
 
   legend {
     font-weight: 700;
@@ -95,8 +87,8 @@
 .options summary {
   cursor: pointer;
   font-weight: 700;
-  /* Ausreichend großes Klickziel (WCAG 2.5.8) */
-  min-block-size: 2.75rem;
+  /* WCAG 2.5.8 verlangt mindestens 24 px. Wir nehmen die Höhe der DB-Buttons (Größe md). */
+  min-block-size: var(--db-sizing-md);
   align-content: center;
 }
 
@@ -105,7 +97,7 @@
  * Feld mit ungültiger Eingabe markieren – :user-invalid greift erst NACH der Interaktion.
  * Zusätzlich zur Farbe zeigt DB UX Text (invalid-message) – nie nur Farbe (WCAG 1.4.1)!
  * ------------------------------------------------------------------------ */
-db-input:has(input:user-invalid) {
+.db-input:has(input:user-invalid) {
   outline: var(--db-border-width-xs) solid var(--db-critical-on-bg-basic-emphasis-80-default);
   outline-offset: var(--db-spacing-fixed-3xs);
   border-radius: var(--db-border-radius-xs);
@@ -140,6 +132,7 @@ db-input:has(input:user-invalid) {
 
   .trip-times {
     font: var(--db-type-headline-sm);
+    /* forciert, dass alle Nummern die mit der gleichen Höhe gerendert werden */
     font-variant-numeric: tabular-nums;
   }
 

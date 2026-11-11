@@ -1,16 +1,20 @@
 # Übung Block 3 · Plus – Eigene Regeln schreiben
 
-**Voraussetzung:** AUFGABE-BASIS.md ist fertig, alle Abschnitte in `layout.css` sind aktiv. Jetzt schreibt ihr eigene Regeln in **`styles.css`** (unter „Ab hier: eure eigenen Styles“). Nutzt dabei nur DB-Tokens, keine festen Pixelwerte.
+**Voraussetzung:** AUFGABE-BASIS.md ist fertig, alle Abschnitte in `layout.css` sind aktiv. Jetzt schreibt ihr eigene Regeln in **`styles.css`** (unter „Ab hier: eure eigenen Styles“). Nutzt dabei nur DB-Tokens, keine festen Pixelwerte. Eine Übersicht von verwendbaren DB-Tokens findet ihr unter https://design-system.deutschebahn.com/documentation/foundation/.
 
 Tipp: DB-Komponenten reichen `class` an das innere Element weiter. `<db-card class="trip">` wird im CSS zu `.db-card.trip`. DevTools → Elements zeigt den echten Aufbau.
 
 ## 1. Fieldset aufräumen
 
-Der Browser zeichnet um das `<fieldset>` „Zeitpunkt“ einen Rahmen. Entfernt ihn und stellt die beiden Radios nebeneinander. Die `<legend>` soll aussehen wie eine kleine Überschrift.
+Die beiden Radio-Buttons im `<fieldset>` „Zeitpunkt“ sollten nebeneinander platziert sein. Die `<legend>` soll aussehen wie eine kleinere Überschrift.
 
-## 2. Großes Klickziel für „Weitere Optionen“
+## 2. Komfortables Klickziel für „Weitere Optionen“
 
-WCAG 2.5.8 verlangt Klickziele von mindestens 24 × 24 px. Ist das `<summary>` groß genug? Prüft es in den DevTools (Element anklicken, Maße im Box-Modell) und vergrößert die Fläche mit Tokens, ohne dass sich die Schrift ändert.
+WCAG 2.5.8 verlangt Klickziele von mindestens 24 × 24 px. Messt zuerst nach: Wie hoch ist das `<summary>`? Prüft es in den DevTools (Element anklicken, Maße im Box-Modell).
+
+Das Minimum ist erfüllt, aber gerade so. Mit dem Finger auf dem Handy ist das knapp. Macht das `<summary>` so hoch wie einen DB-Button, ohne die Schriftgröße zu ändern. Tipp: Die Höhe der Buttons steckt im Token `--db-sizing-md`. Damit „Weitere Optionen“ als Bedienelement auffällt, setzt ihr die Beschriftung außerdem fett.
+
+Hinweis: Für Schrift gibt es keine einzelnen Tokens für Größe oder Gewicht, nur kombinierte für die Kurzschreibweise `font` (z. B. `font: var(--db-type-body-md)`). Die setzen Größe, Zeilenhöhe und Gewicht auf einmal. Wer nur fett will, nimmt deshalb hier ausnahmsweise `font-weight: 700`.
 
 ## 3. Direktverbindungen hervorheben mit `:has()`
 

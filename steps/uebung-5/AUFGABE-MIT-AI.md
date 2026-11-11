@@ -51,7 +51,8 @@ Zeige zuerst einen kurzen Plan, dann die Änderungen.
 
 1. Im Browser: Xyz → Köln Hbf, danach Frankfurt(Main)Hbf → Köln Hbf. Erscheint und verschwindet die Meldung?
 2. `pnpm lint app`: Hält sich der Code an die DB-UX-Regeln?
-3. `pnpm test:a11y --project=app` (einmalig vorher `pnpm test:install`): axe, Tastatur, XSS
+3. `pnpm test:a11y --project=app`: axe, Tastatur, XSS. Einmalig vorher `pnpm test:install` (lädt den Test-Browser).
+   Meldet Playwright `Executable doesn't exist` bzw. `npx playwright install`, fehlt genau dieser Schritt.
 4. Hat die AI etwas erfunden? Fragt nach: „Belege jedes Attribut von db-notification mit dem MCP-Server.“
 
 ## 4. Noch Zeit?
